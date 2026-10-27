@@ -1,0 +1,83 @@
+c[?7l[2J[0mSeaBIOS (version 1.17.0-debian-1.17.0-1ubuntu1)
+
+
+iPXE (https://ipxe.org) 00:03.0 CA00 PCI2.10 PnP PMM+1EFC8E00+1EF08E00 CA00
+Press Ctrl-B to configure iPXE (PCI 00:03.0)...
+                                                                               
+
+
+Booting from Hard Disk..xv6...
+cpu0: starting 0
+sb: size 1000 nblocks 941 ninodes 200 nlog 30 logstart 2 inodestart 32 bmap start 58
+init: starting sh
+$ pagerepl
+FIFO with 3 frames:
+ref 7: [7 -1 -1] fault
+ref 0: [7 0 -1] fault
+ref 1: [7 0 1] fault
+ref 2: [2 0 1] fault
+ref 0: [2 0 1] hit
+ref 3: [2 3 1] fault
+ref 0: [2 3 0] fault
+ref 4: [4 3 0] fault
+ref 2: [4 2 0] fault
+ref 3: [4 2 3] fault
+ref 0: [0 2 3] fault
+ref 3: [0 2 3] hit
+ref 2: [0 2 3] hit
+ref 1: [0 1 3] fault
+ref 2: [0 1 2] fault
+ref 0: [0 1 2] hit
+ref 1: [0 1 2] hit
+ref 7: [7 1 2] fault
+ref 0: [7 0 2] fault
+ref 1: [7 0 1] fault
+FIFO page faults: 15
+LRU with 3 frames:
+ref 7: [7 -1 -1] fault
+ref 0: [7 0 -1] fault
+ref 1: [7 0 1] fault
+ref 2: [2 0 1] fault
+ref 0: [2 0 1] hit
+ref 3: [2 0 3] fault
+ref 0: [2 0 3] hit
+ref 4: [4 0 3] fault
+ref 2: [4 0 2] fault
+ref 3: [4 3 2] fault
+ref 0: [0 3 2] fault
+ref 3: [0 3 2] hit
+ref 2: [0 3 2] hit
+ref 1: [1 3 2] fault
+ref 2: [1 3 2] hit
+ref 0: [1 0 2] fault
+ref 1: [1 0 2] hit
+ref 7: [1 0 7] fault
+ref 0: [1 0 7] hit
+ref 1: [1 0 7] hit
+LRU page faults: 12
+Expected for sample: FIFO 15, LRU 12
+frames FIFO faults FIFO hit% LRU faults LRU hit%
+3      15           25      12          40
+4      10           50      8          60
+5      9           55      7          65
+$ pttest
+Page table before growing the heap:
+va 0x0 pa 0xdf2b000 P=1 W=1 U=1
+va 0x1000 pa 0xdf2d000 P=1 W=1 U=0
+va 0x2000 pa 0xdfbd000 P=1 W=1 U=1
+valid user pages: 3; user page-table pages: 1
+Page table after touching four new heap pages:
+va 0x0 pa 0xdf2b000 P=1 W=1 U=1
+va 0x1000 pa 0xdf2d000 P=1 W=1 U=0
+va 0x2000 pa 0xdfbd000 P=1 W=1 U=1
+va 0x3000 pa 0xdee9000 P=1 W=1 U=1
+va 0x4000 pa 0xdee7000 P=1 W=1 U=1
+va 0x5000 pa 0xdf28000 P=1 W=1 U=1
+va 0x6000 pa 0xdf27000 P=1 W=1 U=1
+valid user pages: 7; user page-table pages: 1
+$ faulttest
+handled page faults: 5 (expected 5)
+pid 6: invalid page fault at 0x23000; killing process
+faulttest parent survived invalid child access
+$ QEMU: Terminated
+
